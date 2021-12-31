@@ -1,0 +1,197 @@
+﻿<Window x:Name="MinesweeperGameWindow" x:Class="Minesweeper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Minesweeper"
+        mc:Ignorable="d"
+        Title="Minesweeper - At page: 0" Foreground="{x:Null}" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" AutomationProperties.IsOffscreenBehavior="FromClip" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="1006" Height="800" ResizeMode="NoResize" Icon="minesweeper_icon.ico">
+
+    <Window.Resources>
+        <Style x:Key="buttonGlowOverride" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="checkBoxGlowOverride" TargetType="CheckBox">
+            <Setter Property="OverridesDefaultStyle" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Name="border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"></Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF7C7C7C" Offset="0.16"/>
+            <GradientStop Color="#FF2D2D2E" Offset="0.16"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid x:Name="MinesweeperMainGrid" Width="1000">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Template Elements -->
+        <Button x:Name="TemplateCheckButton" Content="0" HorizontalAlignment="Left" Margin="350,258,0,0" VerticalAlignment="Top" Width="25" Foreground="#00000000" Height="25" Visibility="Hidden" IsEnabled="False" Style="{StaticResource buttonGlowOverride}"/>
+        <Label x:Name="TemplateCheckLabel" Content="Label" HorizontalAlignment="Left" Margin="375,258,0,0" VerticalAlignment="Top" Height="25" FontSize="10" Foreground="White" Width="54" Visibility="Hidden" IsEnabled="False"/>
+        <!-- Template Elements -->
+
+        <!-- General None Game Pages -->
+        <Label x:Name="MinesweeperLabel" Content="MINESWEEPER" Foreground="White" FontSize="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Comic Sans MS" Visibility="Visible" Height="124" VerticalAlignment="Top" Margin="0,-2,0,0" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <!-- General None Game Pages -->
+
+        <!-- General Offline Game Creation pages -->
+        <Button x:Name="OfflineGameCreationStartButton" Background="#FFDDDDDD" Content="Start!" Margin="330,520,0,0" Click="StartButton_Click" IsEnabled="True" FontSize="70" TabIndex="4" Height="172" VerticalAlignment="Top" BorderThickness="1" BorderBrush="#FF707070" Foreground="Black" Style="{StaticResource buttonGlowOverride}" Visibility="Hidden" HorizontalAlignment="Left" Width="350"/>
+        <Button x:Name="OfflineGameCreationBackButton" Content="Back" Margin="375,705,0,16" FontSize="36" Click="OfflineGameCreationBackButton_Click" HorizontalAlignment="Left" Width="260" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+        <!-- General Offline Game Creation pages -->
+
+        <!-- Online Game Creation Menu (template)-->
+        <TextBox x:Name="OnlineGameCreationMenuIpInput" HorizontalAlignment="Left" Height="38" Margin="343,716,0,0" TextWrapping="Wrap" Text="255.255.255.255" VerticalAlignment="Top" Width="206" BorderThickness="1,1,0,1" TabIndex="2" FontSize="27" MaxLines="1" MaxLength="15" TextAlignment="Right" Visibility="Hidden" IsEnabled="False"/>
+        <Label x:Name="OnlineGameCreationMenuColenForAdressLabel" Content=":" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="548,716,0,0" Background="White" Width="27" Height="38" BorderThickness="0,1" BorderBrush="#FFABADB3" Cursor="Arrow" FontSize="20" FontWeight="Bold" Visibility="Hidden" IsEnabled="False"/>
+        <TextBox x:Name="OnlineGameCreationMenuPortInput" HorizontalAlignment="Left" Height="38" Margin="575,716,0,0" TextWrapping="Wrap" Text="65355" VerticalAlignment="Top" Width="81" BorderThickness="0,1,1,1" TabIndex="2" FontSize="27" MaxLength="5" MaxLines="1" Visibility="Hidden" IsEnabled="False"/>
+        <Button x:Name="OnlineGameCreationMenuBackButton" Content="Back" HorizontalAlignment="Left" Margin="20,711,0,0" VerticalAlignment="Top" Width="150" Height="50" FontSize="36" Click="OnlineGameCreationMenuBackButton_Click" Visibility="Hidden" IsEnabled="False" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="OnlineGameCreationMenuStartButton" Content="Start Hosting!" Margin="330,520,0,0" VerticalAlignment="Top" Height="172" FontSize="50" Visibility="Hidden" HorizontalAlignment="Left" Width="350" Click="OnlineGameCreationMenuStartButton_Click" IsEnabled="False" Style="{StaticResource buttonGlowOverride}"/>
+        <CheckBox x:Name="OnlineGameCreationMenuExistingConsoleCheckBox" Content="Connect to existing host console" HorizontalAlignment="Left" Margin="733,742,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" Foreground="Black" Visibility="Hidden"/>
+        <!-- Online Game Creation Menu -->
+
+        <!-- General Game Creation Pages -->
+        <TextBox x:Name="GeneralGameCreationWidthInput" Margin="137,140,0,0" TextWrapping="Wrap" MaxLines="1" MaxLength="5" IsUndoEnabled="False" FontSize="24" TabIndex="1" HorizontalAlignment="Left" Width="172" Height="40" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="False"/>
+        <TextBox x:Name="GeneralGameCreationHeightInput" Margin="466,140,0,0" TextWrapping="Wrap" MaxLines="1" MaxLength="5" IsUndoEnabled="False" FontSize="24" TabIndex="2" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="172" Visibility="Hidden" IsEnabled="False"/>
+        <TextBox x:Name="GeneralGameCreationMinesInput" Margin="795,140,0,0" TextWrapping="Wrap" MaxLines="1" MaxLength="5" IsUndoEnabled="False" FontSize="24" TabIndex="3" HorizontalAlignment="Left" Width="172" Height="40" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="False"/>
+
+        <TextBlock x:Name="GeneralGameCreationWidthTextBlock" Margin="33,140,0,0" TextWrapping="Wrap" Text="Width:" Foreground="White" FontSize="30" HorizontalAlignment="Left" Width="104" Height="40" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="False" TextAlignment="Center"/>
+        <TextBlock x:Name="GeneralGameCreationHeightTextBlock" Margin="362,140,0,0" TextWrapping="Wrap" FontSize="30" HorizontalAlignment="Left" Width="104" Height="40" VerticalAlignment="Top" Text="Height:" Foreground="White" Visibility="Hidden" IsEnabled="False" TextAlignment="Center"/>
+        <TextBlock x:Name="GeneralGameCreationMinesTextBlock" Margin="691,140,0,0" TextWrapping="Wrap" Text="Mines:" Foreground="White" FontSize="30" HorizontalAlignment="Left" Width="104" Height="40" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="False" TextAlignment="Center"/>
+
+        <Button x:Name="GeneralGameCreationEasyPresetButton" Content="Easy" Margin="75,520,0,0" Click="GeneralGameCreationEasyPresetButton_Click" FontSize="50" TabIndex="5" HorizontalAlignment="Left" Width="220" Height="70" VerticalAlignment="Top" Visibility="Hidden" BorderThickness="1" OverridesDefaultStyle="True" Style="{StaticResource buttonGlowOverride}" Foreground="Black" Background="#FFDDDDDD" RenderTransformOrigin="0.5,0.5" IsEnabled="False">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button x:Name="GeneralGameCreationNormalPresetButton" Content="Normal" Margin="75,622,0,0" Click="GeneralGameCreationNormalPresetButton_Click" FontSize="50" TabIndex="6" HorizontalAlignment="Left" Width="220" Height="70" VerticalAlignment="Top" Visibility="Hidden" OverridesDefaultStyle="True" Style="{StaticResource buttonGlowOverride}" Foreground="Black" Background="#FFDDDDDD" IsEnabled="False"/>
+        <Button x:Name="GeneralGameCreationHardPresetButton" Content="Hard" Margin="705,521,0,0" Click="GeneralGameCreationHardPresetButton_Click" FontSize="50" TabIndex="7" HorizontalAlignment="Left" Width="220" Height="70" VerticalAlignment="Top" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}" OverridesDefaultStyle="True" Foreground="Black" Background="#FFDDDDDD" IsEnabled="False"/>
+        <Button x:Name="GeneralGameCreationExpertPresetButton" Content="Expert" Margin="705,622,0,0" Click="GeneralGameCreationExpertPresetButton_Click" FontSize="50" TabIndex="8" HorizontalAlignment="Left" Width="220" Height="70" VerticalAlignment="Top" Visibility="Hidden" OverridesDefaultStyle="True" Style="{StaticResource buttonGlowOverride}" Foreground="Black" Background="#FFDDDDDD" IsEnabled="False"/>
+        <!-- General Game Creation Pages -->
+
+        <!-- Match Connection Menu -->
+        <Button x:Name="MatchConnectionMenuBackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="300" Click="MatchConnectionMenuBackButton_Click" Visibility="Hidden" Height="57" FontSize="30" TabIndex="5" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="MatchConnectionMenuToOnlineHubNavigationButton" Content="Host your own match!" Margin="680,140,20,0" VerticalAlignment="Top" Height="57" FontSize="30" TabIndex="4" Width="300" HorizontalAlignment="Center" Click="MatchConnectionMenuToOnlineHubNavigationButton_Click" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+
+        <TextBox x:Name="MatchConnectionMenuIpInput" HorizontalAlignment="Left" Height="34" Margin="348,555,0,0" TextWrapping="Wrap" Text="255.255.255.255" VerticalAlignment="Top" Width="214" BorderThickness="1,1,0,1" TabIndex="2" FontSize="27" MaxLines="1" MaxLength="15" TextAlignment="Right" Visibility="Hidden"/>
+        <Label x:Name="MatchConnectionMenuColenForAdressLabel" Content=":" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="562,555,0,0" Background="White" Width="20" Height="34" BorderThickness="0,1" BorderBrush="#FFABADB3" Cursor="Arrow" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
+        <TextBox x:Name="MatchConnectionMenuPortInput" HorizontalAlignment="Left" Height="34" Margin="582,555,0,0" TextWrapping="Wrap" Text="65355" VerticalAlignment="Top" Width="70" BorderThickness="0,1,1,1" TabIndex="2" FontSize="24" MaxLength="5" MaxLines="1" Visibility="Hidden"/>
+
+        <Button x:Name="MatchConnectionMenuConnectButton" Content="Connect!" HorizontalAlignment="Left" Margin="320,350,0,0" VerticalAlignment="Top" Width="360" Height="180" FontSize="80" FontWeight="Bold" TabIndex="3" RenderTransformOrigin="0.457,0.103" Visibility="Hidden" Click="MatchConnectionMenuConnectButton_Click" Style="{StaticResource buttonGlowOverride}"/>
+        <!-- Match Connection Menu -->
+
+        <!-- Offline Hub -->
+        <Button x:Name="OfflineHubToMatchConnectionMenuNavigationButton" Content="Go ONLINE?" HorizontalAlignment="Left" Margin="777,146,0,0" VerticalAlignment="Top" Width="190" Height="90" Click="OfflineHubToMatchConnectionMenuNavigationButton_Click" FontSize="24" Visibility="Visible" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="OfflineHubButton1" Content="Vanilla" HorizontalAlignment="Left" Margin="270,350,0,0" VerticalAlignment="Top" Width="180" Height="180" FontSize="37" Click="OfflineHubButton1_Click" Visibility="Visible" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="OfflineHubButton2" Content="Stacks" HorizontalAlignment="Left" Margin="550,350,0,0" VerticalAlignment="Top" Width="180" Height="180" FontSize="40" Click="OfflineHubButton2_Click" Visibility="Visible" Style="{StaticResource buttonGlowOverride}"/>
+        <!-- Offline Hub -->
+
+        <!-- Stacks Game Creation Menu -->
+
+        <!-- Stacks Game Creation Menu -->
+
+        <!-- General game page -->
+        <Button x:Name="GameGuiBackButton" Background="#FFDDDDDD" Foreground="Black" Content="Back" Style="{StaticResource buttonGlowOverride}" OverridesDefaultStyle="True" HorizontalAlignment="Left" Margin="3,3,0,0" VerticalAlignment="Top" Width="110" Height="84" Click="GameGuiBackButton_Click" IsEnabled="False" Visibility="Hidden" FontSize="36"/>
+        <TextBlock x:Name="MinesweeperFlagCounter" HorizontalAlignment="Left" Margin="582,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="173" Visibility="Hidden" IsEnabled="False" Background="Black" TextAlignment="Center" FontSize="65" Foreground="Red" Text="00"/>
+        <Button x:Name="GameRestartButton" Foreground="Black" Style="{StaticResource buttonGlowOverride}" OverridesDefaultStyle="True" Content=":)" HorizontalAlignment="Left" Margin="430,3,0,0" VerticalAlignment="Top" Width="140" Height="115" Click="GameRestartButton_Click" RenderTransformOrigin="0.5,0.5" Background="#FFFFE800" BorderThickness="3" FontSize="100" FontFamily="Franklin Gothic Medium" FontWeight="Bold" Cursor="Hand" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="False" Visibility="Hidden" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBlock x:Name="MinesweeperGameClock" HorizontalAlignment="Left" Margin="760,3,0,0" Height="84" Width="237" FontSize="65" Foreground="#FF46FF00" Background="Black" Visibility="Hidden" IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" TextAlignment="Center" Padding="0"><Run Text="00:"/><Run Text="00"/></TextBlock>
+        <Border x:Name="GamePlaneBorder" BorderBrush="Black" BorderThickness="8" Margin="0,124,0,0" Height="647" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="False" HorizontalAlignment="Left" Width="1000" RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.043"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.374"/>
+                </TransformGroup>
+            </Border.RenderTransform>
+        </Border>
+        <!-- General game page -->
+
+        <!-- Coop game page -->
+        <ComboBox x:Name="StacksGameCreationWeightSelectionComboBox" HorizontalAlignment="Left" Margin="263.5,295,0,0" VerticalAlignment="Top" Width="330" Height="80" Text="Weights Sum" FontSize="42" Background="White" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectionChanged="StacksGameCreationWeightSelectionComboBox_SelectionChanged" Cursor="Arrow" IsTextSearchEnabled="False" SelectedIndex="0" Visibility="Hidden">
+            <ComboBoxItem Content="Weights Sum"/>
+            <ComboBoxItem Content="1 Mine Weight"/>
+            <ComboBoxItem Content="2 Mine Weight"/>
+            <ComboBoxItem Content="3 Mine Weight"/>
+            <ComboBoxItem Content="4 Mine Weight"/>
+            <ComboBoxItem Content="5 Mine Weight"/>
+            <ComboBoxItem Content="6 Mine Weight"/>
+            <ComboBoxItem Content="7 Mine Weight"/>
+            <ComboBoxItem Content="8 Mine Weight"/>
+            <ComboBoxItem Content="9 Mine Weight"/>
+            <ComboBoxItem Content="10 Mine Weight"/>
+        </ComboBox>
+        <TextBox x:Name="StacksGameCreationWeightInputTextBox" HorizontalAlignment="Left" Height="80" Margin="603,295,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" FontSize="46" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="3" MaxLines="1" BorderThickness="1,1,0,1" IsReadOnly="True" TextChanged="StacksGameCreationWeightInputTextBox_TextChanged" Loaded="StacksGameCreationWeightInputTextBox_Loaded" Visibility="Hidden"/>
+        <!-- Coop game page -->
+
+        <!-- Online Hub -->
+        <Button x:Name="OnlineHubButton1" Content="CO-OP" HorizontalAlignment="Left" Margin="270,320,0,0" VerticalAlignment="Top" Width="180" Height="180" FontSize="36" Click="OnlineHubButton1_Click" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="OnlineHubButton2" Content="Battle Royale" HorizontalAlignment="Left" Margin="550,320,0,0" VerticalAlignment="Top" Width="180" Height="180" FontSize="25" Click="OnlineHubButton2_Click" Visibility="Hidden" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource buttonGlowOverride}"/>
+        <Button x:Name="OnlineHubBackButton" Content="Back" HorizontalAlignment="Left" Margin="19,140,0,0" VerticalAlignment="Top" Width="180" RenderTransformOrigin="0.262,0.783" Height="50" FontSize="36" Click="OnlineHubBackButton_Click" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+        <!-- Online Hub -->
+
+        <!-- Coop Game Creation Menu -->
+        <Button x:Name="CoopCreationMoveModeCheckButton" Content="1" Margin="460,330,0,0" VerticalAlignment="Top" Foreground="Transparent" Height="80" Visibility="Hidden" Click="CoopCreationMoveModeCheckButton_Click" HorizontalAlignment="Left" Width="80" IsEnabled="False" Style="{StaticResource buttonGlowOverride}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/BlackArrowUp.png"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="CoopCreationVoteModeCheckLabel" Content="Vote" Margin="449,233,0,0" VerticalAlignment="Top" Height="67" FontSize="46" Foreground="White" Visibility="Hidden" HorizontalAlignment="Left" Width="102" IsEnabled="False"/>
+        <Label x:Name="CoopCreationRandomModeCheckLabel" Content="Random" HorizontalAlignment="Left" Margin="411,422,0,0" VerticalAlignment="Top" Height="72" FontSize="46" Foreground="White" Width="178" Visibility="Hidden" IsEnabled="False"/>
+        <!-- Coop Game Creation Menu -->
+
+        <!-- Online Game Preview -->
+        <Button x:Name="OnlineGamePreviewQuitMatchButton" Content="Quit match" HorizontalAlignment="Left" Margin="20,705,0,0" VerticalAlignment="Top" Width="200" Height="50" Click="OnlineGamePreviewQuitMatchButton_Click" FontSize="36" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+        <Label x:Name="OnlineGamePreviewMinigameDisplayerLabel" Content="CO-OP" HorizontalAlignment="Left" Margin="320,375,0,0" VerticalAlignment="Top" Height="120" Width="360" FontSize="50" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"/>
+        <Label x:Name="OnlineGamePreviewPlayerCountLabel" Content="Players: 1" HorizontalAlignment="Left" Margin="19,210,0,0" VerticalAlignment="Top" Width="219" Height="53" Background="White" Foreground="Black" FontSize="36" Visibility="Hidden"/>
+        <Label x:Name="OnlineGamePreviewHostDisplayerLabel" Content="Host: False" HorizontalAlignment="Left" Margin="19,146,0,0" VerticalAlignment="Top" Height="53" Width="219" FontSize="36" Background="White" Foreground="Black" Visibility="Hidden"/>
+        <Button x:Name="OnlineGamePreviewStartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="350,510,0,0" VerticalAlignment="Top" Width="300" Height="70" Click="OnlineGamePreviewStartGameButton_Click" FontSize="45" Visibility="Hidden" Style="{StaticResource buttonGlowOverride}"/>
+        <TextBox x:Name="StacksGameCreationPercentageDisplayTextBox" HorizontalAlignment="Left" Height="80" Margin="688,295,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Width="49" IsReadOnly="True" FontSize="46" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" Visibility="Hidden"/>
+        <Button x:Name="StacksGameCreationSetAllButton" Content="Set all" HorizontalAlignment="Left" Margin="603,380,0,0" VerticalAlignment="Top" Width="134" Height="30" Click="StacksGameCreationSetAllButton_Click" FontSize="20" Visibility="Hidden"/>
+        <Button x:Name="StacksGameCreationSetDefaultButton" Content="Set default" HorizontalAlignment="Left" Margin="603,415,0,0" VerticalAlignment="Top" Width="134" Height="30" Click="StacksGameCreationSetDefaultButton_Click" FontSize="20" Visibility="Hidden"/>
+        <TextBox x:Name="StacksGameCreationRawInputTextBox" HorizontalAlignment="Left" Height="65" Margin="350,380,0,0" TextWrapping="Wrap" Text="10;25;20;15;10;9;5;3;2;1" VerticalAlignment="Top" Width="244" VerticalContentAlignment="Center" FontSize="18.5" MaxLength="29" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+        <Button x:Name="StacksGameCreationSetRawInputButton" Content="Set Raw Input" HorizontalAlignment="Left" Margin="264,380,0,0" VerticalAlignment="Top" Width="81" Height="65" Click="StacksGameCreationSetRawInputButton_Click" Visibility="Hidden"/>
+        <!-- Online Game Preview -->
+    </Grid>
+</Window>

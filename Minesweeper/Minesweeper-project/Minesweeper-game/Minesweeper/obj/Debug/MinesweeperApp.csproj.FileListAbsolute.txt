@@ -1,0 +1,15 @@
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\bin\Debug\Minesweeper.exe.config
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\bin\Debug\Minesweeper.exe
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\bin\Debug\Minesweeper.pdb
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\MainWindow.g.cs
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\App.g.cs
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper_Content.g.cs
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper_MarkupCompile.cache
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper_MarkupCompile.lref
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\MainWindow.baml
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper.g.resources
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\MinesweeperApp.csproj.GenerateResource.cache
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\MinesweeperApp.csproj.CoreCompileInputs.cache
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper.exe
+C:\Users\MlgEp\Google Drive\HOME\Projects\Minesweeper-project\Minesweeper-game\Minesweeper\obj\Debug\Minesweeper.pdb
